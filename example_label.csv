@@ -1,0 +1,4 @@
+Note Event,Start Second,Start Millisecond,End Second,End Millisecond,Note Pitches
+1,3,500,5,300,"60,64,67"
+2,5,300,10,0,"60"
+3,90,0,95,0,"62,65"
