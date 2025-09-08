@@ -1,11 +1,93 @@
-Record audio however you want, save it as a WAV file, and open the file in any music editor you prefer. Audacity is free and does everything needed. For each note and chord, use the editor to determine the start and stop time of the note event and the midi pitch of the notes. In Audacity, Effect > Pitch and Tempo > Change Pitch will tell you the estimated frequency of the note. https://www.colincrawley.com/midi-note-to-audio-frequency-calculator/ can be used to determine midi pitch value of a specific frequency. The site will also play the frequency, so you can verify by ear. 
+# Audio Labeling Guide
 
-Since we cannot have multiple files of the same name, consider adding a unique random id, a timestamp, your name, or anything else to avoid repetion in file names. Additionally, feel free to include descriptors of the audio content in the filename, such as acoustic vs electric or lesson number, but this is not necessary.
+This guide explains how to record, analyze, and label audio files for MIDI pitch detection.
 
-Create a CSV file to label the data or use example_label.csv as a reference. The label file should have the exact same name as the audio file differing only by the extension. The first row and column of the label file are used for headers and should not have any data. Each row of the file is a label for a single note event. https://www.editcsvonline.com/ can be used to edit CSV files.
+## Recording and Analysis
 
-The second and third columns of the label file record the second and millisecond of the start of the note, and the fourth and fifth columns record the second and millisecond of the end of the note. Seconds and milliseconds should be recorded as integer values. So a chord that starts at 3 seconds and 500 milliseconds and ends at 5 seconds, should be labeled 3 in column two, 500 in column three, 5 in column four, and 0 in column five. Try to produce as accurate a label as reasonable, but 1 millisecond is an extremely short amount of time and a difference of a few milliseconds will not matter.
+1. **Record Audio**
+   - Record audio in any format you prefer
+   - Save the file as a WAV format
+   - Open the file in a music editor (Audacity is free and recommended)
 
-The sixth column of the label file should record the midi pitches being played. Quotes should be placed around the values, and if multiple values are being played, they should be seperated by a comma but not a space. If midi pitches 60, 64, and 67 are being played, that should be recorded as "60,64,67". It should not be recorded as "60, 64, 67" or 60,64,67. Note events with a single pitch should still be placed in quotes, so record "60" not 60.
+2. **Determine Note Properties**
+   For each note and chord in your recording, use the editor to identify:
+   - Start time of the note event
+   - Stop time of the note event  
+   - MIDI pitch of the notes
 
-Upload the audio file and the label file to the same folder in the repositroy. Audio with no label file should be uploaded to the unlabeled folder. Audio with a label file should be uploaded to the unverified folder. If you have time, check to see that any audio in the unverified folder has been labeled correctly, and either correct any mistakes or move the file to the verified folder. Additionally, if you have time, produce a label file for any audio in the unlabeled folder and move it to the unverified folder.
+3. **Find MIDI Pitch Values**
+   - In Audacity: Use **Effect > Pitch and Tempo > Change Pitch** to get the estimated frequency
+   - Convert frequency to MIDI pitch using [this calculator](https://www.colincrawley.com/midi-note-to-audio-frequency-calculator/)
+   - The calculator also plays frequencies so you can verify by ear
+
+## File Naming
+
+To avoid duplicate filenames, include one or more of the following:
+- Unique random ID
+- Timestamp
+- Your name
+- Audio descriptors (acoustic vs electric, lesson number, etc.)
+
+**Example:** `guitar_acoustic_lesson1_john_20241201.wav`
+
+## Creating Label Files
+
+### CSV Structure
+- Create a CSV file with the **exact same name** as your audio file, but with `.csv` extension
+- Use [EditCSVOnline](https://www.editcsvonline.com/) to edit CSV files if needed
+- Reference `example_label.csv` as a template
+- Include headers in the first row
+
+### CSV Format Requirements
+
+**Headers:** `Note Event,Start Second,Start Millisecond,End Second,End Millisecond,Note Pitches`
+
+- **Note Event:** Sequential numbers (1, 2, 3, etc.)
+- **Start Second:** Integer values for start time in seconds
+- **Start Millisecond:** Integer values for start time milliseconds  
+- **End Second:** Integer values for end time in seconds
+- **End Millisecond:** Integer values for end time milliseconds
+- **Note Pitches:** MIDI pitch numbers in quotes
+
+### Example CSV Structure
+```csv
+Note Event,Start Second,Start Millisecond,End Second,End Millisecond,Note Pitches
+1,3,500,5,300,"60,64,67"
+2,5,300,10,0,"60"
+3,90,0,95,0,"62,65"
+```
+
+### Time Formatting Examples
+- A chord starting at 3.5 seconds and ending at 5.0 seconds:
+  - Column 2: `3`
+  - Column 3: `500`
+  - Column 4: `5`
+  - Column 5: `0`
+
+### MIDI Pitch Formatting
+- **Single note:** `"60"`
+- **Multiple notes:** `"60,64,67"` (comma-separated, no spaces)
+- **Always use quotes** around pitch values
+- **Don't include spaces** after commas
+
+## File Organization
+
+Upload files to the appropriate repository folder:
+
+### Folder Structure
+- **`unlabeled/`** - Audio files without label files
+- **`unverified/`** - Audio files with label files (needs verification)
+- **`verified/`** - Audio files with verified, correct labels
+
+### Workflow
+1. Upload audio + label files to `unverified/` folder
+2. Upload audio-only files to `unlabeled/` folder
+3. **If you have time:**
+   - Verify files in `unverified/` folder for accuracy
+   - Move correctly labeled files to `verified/` folder
+   - Create labels for files in `unlabeled/` folder and move to `unverified/`
+
+## Quality Notes
+- Aim for reasonable accuracy in timing
+- Small differences (a few milliseconds) won't significantly impact results
+- 1 millisecond precision is extremely fine - don't over-optimize
